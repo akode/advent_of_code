@@ -27,7 +27,9 @@ def part1():
     return total_risk
 
 def part2():
-    pass
+    data = load_data()
+    print(line + "\n" for line in data)
+    return None
 
 
 if __name__ == "__main__":
