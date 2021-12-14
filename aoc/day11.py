@@ -23,6 +23,7 @@ class Cavern:
         self.w = len(data[0])
         self.h = len(data)
         self.total_flashes = 0
+        self.first_sync = None
         self.stack = deque()
 
     def increment(self):
@@ -30,11 +31,15 @@ class Cavern:
             for x in range(self.w):
                 self.data[y][x].energy += 1
 
-    def reset_energy(self):
+    def reset_energy(self, i):
+        resets = 0
         for y in range(self.h):
             for x in range(self.w):
                 if self.data[y][x].energy > 9:
                     self.data[y][x].reset()
+                    resets += 1
+        if resets==self.w*self.h:
+            self.first_sync = i
 
     def is_valid_neighbor(self, y, dy, x, dx):
         return (
@@ -70,18 +75,25 @@ class Cavern:
                 self.stack.extend(self.get_neighbors(y, x))
         return n_flashes
 
-    def update(self):
+    def update(self, i):
         self.increment()
         n_flashes = self.flash()
         self.total_flashes += n_flashes
-        self.reset_energy()
+        self.reset_energy(i)
 
     def run(self, n=100):
-        for i in range(n):
-            self.update()
-            print(f"Iteration {i}, flashes {self.total_flashes}")
-            
-        return self.total_flashes
+        if n>0:
+            for i in range(n):
+                self.update(i)
+                print(f"Iteration {i}, flashes {self.total_flashes}")
+        else:
+            i = 1
+            while self.first_sync == None:
+                self.update(i)
+                i += 1
+                print(f"Iteration {i}, flashes {self.total_flashes}")
+
+        return self.total_flashes, self.first_sync
 
     def __repr__(self) -> str:
         return "\n".join("".join(str(item.energy) for item in line) for line in self.data)
@@ -96,12 +108,15 @@ def load_data():
 def part1():
     data = load_data()
     cavern = Cavern(data)
-    total_flashes = cavern.run(100)
+    total_flashes, _ = cavern.run(100)
     return total_flashes
 
 
 def part2():
-    return None
+    data = load_data()
+    cavern = Cavern(data)
+    _, first_sync = cavern.run(-1)
+    return first_sync
 
 
 if __name__ == "__main__":
