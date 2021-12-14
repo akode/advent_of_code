@@ -38,7 +38,7 @@ class Cavern:
 
     def is_valid_neighbor(self, y, dy, x, dx):
         return (
-            ((dx != 0) & (dy != 0))
+            (not ((dx == 0) and (dy == 0)))
             & (x + dx >= 0)
             & (x + dx < self.w)
             & (y + dy >= 0)
@@ -47,10 +47,10 @@ class Cavern:
 
     def get_neighbors(self, y, x):
         return (
-            (x, y)
+            (x+dx, y+dy)
             for dy in [-1, 0, 1]
             for dx in [-1, 0, 1]
-            if self.is_valid_neighbor(y, dy, x, dx) & (self.data[y][x].flashed == False)
+            if self.is_valid_neighbor(y, dy, x, dx) and (self.data[y+dy][x+dx].flashed == False)
         )
 
     def flash(self):

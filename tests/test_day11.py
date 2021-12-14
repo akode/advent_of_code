@@ -85,3 +85,9 @@ def test_step1(start, end):
         for line_a, line_b in zip(cavern.data, end)
         for a, b in zip(line_a, line_b)
     )
+
+def test_is_valid_neighbor():
+    cavern = Cavern([[Octopus(i) for i in line] for line in state(2, steps)])
+    print(cavern.h, cavern.w)
+    assert 9+1==cavern.h, "Example should exceed bounds"
+    assert cavern.is_valid_neighbor(9, 1, 0, 0) == False
