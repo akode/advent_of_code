@@ -18,7 +18,7 @@ def load_data():
 
 def part1(n=10):
     seq, replaces = load_data()
-    seq = split_seq(seq)
+    seq = ct.Counter(split_seq(seq))
 
     for i in range(n):
         print(f"Iteration {i}; Length {len(seq)}", end="\r")
@@ -31,7 +31,27 @@ def part1(n=10):
 
 
 def part2(n=40):
-    return part1(n)
+    seq, replaces = load_data()
+    first_pair = seq[:2]
+
+    seq = ct.Counter(split_seq(seq))
+
+    for i in range(n):
+        print(f"Iteration {i}; Length {len(seq)}", end="\r")
+        new_seq = ct.defaultdict(int)
+        first_pair = replaces.get(first_pair, [first_pair])[0]
+        for pair, count in seq.items():
+            for rep in replaces.get(pair, [pair]):
+                new_seq[rep] += count
+        seq = new_seq 
+
+    counts = ct.defaultdict(int)
+    for pair, count in seq.items():
+        counts[pair[1]] += count
+
+    counts[first_pair[0]] += 1
+    counts = sorted(counts.items(), key=lambda x: -x[1])
+    return counts[0][1] - counts[-1][1]
 
 
 if __name__ == "__main__":
