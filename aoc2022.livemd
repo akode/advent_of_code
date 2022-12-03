@@ -1,0 +1,590 @@
+<!-- livebook:{"persist_outputs":true} -->
+
+# AOC2022
+
+## Day1
+
+```elixir
+defmodule Day1 do
+  def read_data(data) do
+    data
+    |> String.split("\n\n")
+    |> Enum.map(fn sublist ->
+      sublist
+      |> String.split()
+      |> Enum.map(&String.to_integer(&1))
+    end)
+  end
+
+  def puzzle1(data) do
+    data
+    |> Enum.map(&Enum.sum(&1))
+    |> Enum.max()
+  end
+
+  def puzzle2(data) do
+    data
+    |> Enum.map(&Enum.sum(&1))
+    |> Enum.sort(:desc)
+    |> Enum.take(3)
+    |> Enum.sum()
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Day1, <<70, 79, 82, 49, 0, 0, 9, ...>>, {:puzzle2, 1}}
+```
+
+```elixir
+ExUnit.start(auto_run: false)
+
+defmodule Day1Test do
+  use ExUnit.Case, async: false
+
+  setup_all do
+    {:ok,
+     data: """
+     1000
+     2000
+     3000
+
+     4000
+
+     5000
+     6000
+
+     7000
+     8000
+     9000
+
+     10000
+     """}
+  end
+
+  describe "Day1" do
+    test "test data", state do
+      assert state[:data]
+             |> Day1.read_data()
+             |> length == 5
+    end
+
+    test "test max calories", state do
+      assert state[:data]
+             |> Day1.read_data()
+             |> Day1.puzzle1() == 24000
+    end
+
+    test "top 3 calories", state do
+      assert state[:data]
+             |> Day1.read_data()
+             |> Day1.puzzle2() == 45000
+    end
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Day1Test, <<70, 79, 82, 49, 0, 0, 18, ...>>, {:"test Puzzle 1 top 3 calories", 1}}
+```
+
+```elixir
+ExUnit.run()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+...
+Finished in 0.00 seconds (0.00s async, 0.00s sync)
+3 tests, 0 failures
+
+Randomized with seed 321704
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+%{excluded: 0, failures: 0, skipped: 0, total: 3}
+```
+
+```elixir
+day1_input = File.read!("/Users/akode/dev/advent_of_code/aoc2022/day1.txt")
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+"18814\n\n1927\n12782\n8734\n10904\n9548\n1493\n\n4576\n4235\n2617\n1012\n2088\n1325\n1249\n5173\n4893\n3295\n2376\n2714\n6210\n\n6684\n5766\n3442\n4901\n4875\n4815\n5898\n2410\n5789\n4133\n3590\n1342\n\n8867\n7109\n2904\n5810\n3254\n4257\n2508\n3580\n5494\n\n11885\n14638\n11891\n4244\n\n11603\n17113\n\n8341\n2993\n7759\n7219\n2962\n8020\n6176\n6100\n6168\n5467\n\n8884\n11521\n3912\n2993\n13471\n\n3093\n4064\n9130\n7665\n10440\n6175\n7390\n10297\n\n29896\n7553\n\n3709\n5876\n3564\n3824\n7695\n6789\n4295\n1603\n2170\n1004\n7871\n\n5020\n1414\n2741\n6719\n2845\n6136\n6399\n1252\n3594\n5522\n7969\n\n5693\n2115\n11763\n9283\n12287\n\n7006\n5946\n10795\n1196\n7918\n5157\n7856\n\n4240\n2887\n11614\n5791\n11635\n3458\n11730\n\n4843\n8330\n7046\n\n6100\n4280\n5609\n6975\n3704\n3033\n4953\n8469\n4844\n6110\n\n12946\n25227\n10688\n\n2403\n1851\n2695\n3953\n5878\n2712\n2516\n5473\n3877\n1955\n5663\n1627\n2777\n3082\n\n56364\n\n4636\n6558\n2535\n3165\n2685\n4797\n6021\n5666\n4233\n1469\n7070\n\n7209\n2433\n7902\n3515\n5477\n9505\n5126\n9294\n4364\n\n8355\n\n2434\n1139\n2011\n3784\n1194\n2270\n6072\n5157\n3428\n3915\n2201\n1769\n3530\n4034\n3381\n\n1032\n6856\n6760\n5918\n5255\n\n37294\n\n5331\n8102\n3359\n3692\n6645\n10076\n8602\n2726\n\n1196\n3789\n9127\n15026\n10039\n\n44620\n\n33181\n\n7325\n5261\n\n6633\n1629\n13650\n13046\n9180\n13952\n\n8267\n4591\n7888\n5919\n3255\n3938\n5320\n6318\n1016\n5467\n\n4945\n4766\n4089\n6270\n5951\n3624\n1294\n2845\n6236\n2284\n6016\n6171\n2888\n3417\n\n7105\n3162\n5163\n6685\n5034\n5590\n3857\n1349\n3110\n3216\n5713\n4128\n\n3345\n5178\n2139\n6009\n3656\n3985\n2925\n1878\n5277\n2548\n5014\n4170\n2068\n5406\n3782\n\n4545\n3019\n4971\n5443\n4041\n2992\n2572\n1746\n6324\n2505\n4059\n4559\n3282\n6281\n\n2479\n1227\n1920\n1652\n7127\n5330\n5773\n7980\n5979\n1327\n6926\n\n5533\n4924\n4501\n1595\n5068\n1872\n1756\n6565\n4526\n2686\n1905\n4323\n4340\n\n6740\n9667\n7552\n1838\n4250\n8439\n2018\n9334\n4571\n\n5685\n2107\n3006\n1731\n2252\n2543\n4018\n6351\n1533\n5665\n2671\n2983\n\n7982\n5914\n7895\n1973\n6270\n1546\n1333\n6630\n7107\n5563\n1223\n\n3377\n1575\n6806\n6269\n5158\n5195\n2001\n1896\n8137\n\n4449\n2044\n1954\n4646\n4853\n2901\n4696\n3729\n2467\n5396\n1370\n5768\n3729\n1122\n2760\n\n5594\n3736\n4226\n5677\n1451\n5936\n3771\n1747\n4692\n1991\n3244\n5235\n2494\n1136\n2600\n\n60004\n\n10268\n7786\n8060\n10508\n5528\n6774\n\n1428\n16323\n9092\n17680\n\n1278\n3760\n4600\n5281\n3371\n4529\n2906\n5004\n4326\n4382\n3507\n1738\n3022\n1261\n2087\n\n2088\n5008\n6379\n4057\n3677\n5741\n1096\n3156\n4884\n5431\n3653\n6249\n1959\n4851\n\n3198\n1054\n5059\n1967\n5084\n4735\n1672\n1975\n3757\n5140\n4123\n1226\n5561\n3002\n1048\n\n4155\n6076\n4411\n4147\n1509\n1410\n1316\n2436\n5710\n3469\n5833\n3284\n2004\n5333\n2931\n\n3722\n6554\n4079\n3647\n6665\n2834\n6111\n1699\n2264\n3301\n4618\n6804\n\n18306\n2766\n15246\n16034\n\n10794\n8795\n6042\n14744\n8731\n\n9246\n15455\n7276\n1023\n\n4976\n5679\n3094\n6609\n3132\n6317\n7249\n3085\n2201\n4788\n3853\n7298\n\n6328\n8513\n10986\n8497\n3620\n\n8570\n6016\n3967\n7081\n2226\n3628\n1183\n7502\n2675\n\n3713\n4940\n3895\n5463\n1568\n1646\n1933\n4149\n4542\n5107\n2476\n6416\n5590\n4177\n\n1853\n3161\n5524\n4869\n4002\n4835\n5345\n3406\n3809\n6334\n3815\n4439\n4804\n4653\n\n2340\n1068\n6949\n4527\n2062\n1973\n7159\n6917\n7989\n5951\n3967\n\n7479\n1230\n6619\n5481\n4068\n6854\n1792\n6293\n2888\n7018\n4381\n\n43123\n\n12920\n10198\n13757\n10070\n3194\n10576\n\n26957\n29555\n\n5102\n11583\n4272\n\n5229\n1697\n7613\n1254\n3850\n3959\n3011\n8327\n1583\n5689\n\n3069\n5459\n1921\n4279\n2614\n3025\n1134\n2718\n3784\n3160\n2885\n5309\n3048\n3150\n\n15015\n5487\n11549\n16223\n\n1700\n1079\n5726\n2919\n4403\n4004\n4490\n4474\n5385\n4940\n2019\n2426\n1774\n5222\n4095\n\n2109\n1692\n3529\n4425\n5017\n1955\n2956\n5193\n1359\n3071\n5086\n3272\n1148\n1244\n5108\n\n3183\n5818\n5424\n3009\n9660\n10737\n7805\n4181\n\n4393\n2248\n6731\n1691\n1330\n2227\n3580\n\n3097\n6770\n4477\n2274\n10473\n6196\n6291\n10213\n\n4466\n1945\n4168\n3012\n5737\n2918\n1568\n6018\n3634\n2373\n2398\n1899\n5096\n6008\n2990\n\n6237\n4195\n4209\n6274\n5259\n6651\n6781\n4354\n7187\n2438\n1651\n1455\n\n5091\n5021\n1578\n1839\n2447\n1410\n1551\n1273\n2870\n2060\n6062\n4994\n4425\n1142\n2121\n\n25078\n34262\n\n3027\n1504\n2559\n3905\n4918\n1442\n5269\n1792\n1787\n7325\n2833\n6804\n\n10472\n3468\n6981\n4162\n5889\n10528\n3516\n4516\n\n5317\n1944\n2244\n1565\n2805\n2058\n3249\n5589\n5225\n4472\n4292\n4096\n1682\n3780\n4732\n\n2155\n1915\n1390\n6056\n4997\n5247\n3565\n5359\n4920\n3193\n6103\n5942\n\n5728\n1735\n2890\n2208\n4913\n3879\n6078\n3237\n2997\n3109\n1150\n4648\n\n4368\n6370\n5658\n2440\n3404\n1849\n5650\n3261\n4920\n4114\n3673\n6330\n4183\n5309\n\n3227\n2526\n7386\n6005\n5441\n8946\n2415\n8447\n9143\n\n2211\n5669\n1077\n3134\n1072\n3419\n5779\n3499\n5291\n2636\n5031\n4309\n4030\n6032\n3512\n\n40358\n\n31692\n14965\n\n12952\n19656\n13010\n15201\n\n3398\n5373\n2074\n4864\n2925\n3543\n" <> ...
+```
+
+```elixir
+day1_input
+|> Day1.read_data()
+|> Day1.puzzle1()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+69626
+```
+
+```elixir
+day1_input
+|> Day1.read_data()
+|> Day1.puzzle2()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+206780
+```
+
+## Day2
+
+```elixir
+defmodule Day2 do
+  def decode(shape) do
+    case shape do
+      "A" -> :rock
+      "B" -> :paper
+      "C" -> :scissors
+      "X" -> :rock
+      "Y" -> :paper
+      "Z" -> :scissors
+    end
+  end
+
+  def decode_goal(goal) do
+    case goal do
+      "X" -> :loose
+      "Y" -> :draw
+      "Z" -> :win
+      _ -> nil
+    end
+  end
+
+  def decide_shape(elve, goal) do
+    case {elve, goal} do
+      {:rock, :win} -> :paper
+      {:paper, :win} -> :scissors
+      {:scissors, :win} -> :rock
+      {:rock, :loose} -> :scissors
+      {:paper, :loose} -> :rock
+      {:scissors, :loose} -> :paper
+      {_, :draw} -> elve
+    end
+  end
+
+  def read_data(data) do
+    data |> String.trim() |> String.split("\n")
+  end
+
+  def outcome(my_shape, other_shape) do
+    case {my_shape, other_shape} do
+      {:rock, :paper} -> :loose
+      {:rock, :scissors} -> :win
+      {:paper, :scissors} -> :loose
+      {:paper, :rock} -> :win
+      {:scissors, :rock} -> :loose
+      {:scissors, :paper} -> :win
+      _ -> :draw
+    end
+  end
+
+  def score(shape, outcome) do
+    shape_score =
+      case shape do
+        :rock -> 1
+        :paper -> 2
+        :scissors -> 3
+      end
+
+    outcome_score =
+      case outcome do
+        :win -> 6
+        :loose -> 0
+        :draw -> 3
+      end
+
+    shape_score + outcome_score
+  end
+
+  def puzzle1(data) do
+    data
+    |> Enum.map(fn match -> match |> String.split() |> Enum.map(&decode(&1)) end)
+    |> Enum.map(fn match ->
+      [elve, me] = match
+      score(me, outcome(me, elve))
+    end)
+    |> Enum.sum()
+  end
+
+  def puzzle2(data) do
+    data
+    |> Enum.map(fn match ->
+      [elve, goal] = String.split(match)
+      elve = decode(elve)
+      goal = decode_goal(goal)
+      shape = decide_shape(elve, goal)
+      score(shape, outcome(shape, elve))
+    end)
+    |> Enum.sum()
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Day2, <<70, 79, 82, 49, 0, 0, 18, ...>>, {:puzzle2, 1}}
+```
+
+```elixir
+defmodule Day2Test do
+  use ExUnit.Case, async: false
+
+  setup_all do
+    {:ok,
+     data: """
+     A Y
+     B X
+     C Z
+     """}
+  end
+
+  describe "Day2" do
+    test "read_data", state do
+      data =
+        state[:data]
+        |> Day2.read_data()
+
+      [head | _] = data
+      assert data |> length == 3
+      assert head == "A Y"
+    end
+
+    test "score" do
+      assert Day2.score(:rock, :win) == 7
+      assert Day2.score(:scissors, :draw) == 6
+    end
+
+    test "decide shape" do
+      assert Day2.decide_shape(:rock, :loose) == :scissors
+    end
+
+    test "total score part1", state do
+      assert state[:data]
+             |> Day2.read_data()
+             |> Day2.puzzle1() == 15
+    end
+
+    test "total score part2", state do
+      assert state[:data]
+             |> Day2.read_data()
+             |> Day2.puzzle2() == 12
+    end
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Day2Test, <<70, 79, 82, 49, 0, 0, 23, ...>>, {:"test Day2 total score part2", 1}}
+```
+
+```elixir
+ExUnit.run()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+.....
+Finished in 0.00 seconds (0.00s async, 0.00s sync)
+5 tests, 0 failures
+
+Randomized with seed 321704
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+%{excluded: 0, failures: 0, skipped: 0, total: 5}
+```
+
+```elixir
+day2_input = File.read!("/Users/akode/dev/advent_of_code/aoc2022/day2.txt")
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+"A Z\nA Z\nC Y\nA X\nA X\nA Z\nC X\nA X\nC Y\nA Z\nB Y\nB Y\nC X\nC Y\nC X\nB Y\nA Y\nC Y\nB Y\nB Z\nB Y\nC X\nA Z\nC Y\nB Y\nB Y\nA Z\nB Y\nB Y\nB Y\nB Z\nB Y\nA Z\nB Y\nC Y\nB Y\nB Z\nC X\nB Z\nA X\nB Y\nB Z\nC Y\nA Z\nC Y\nA Z\nB Y\nC Y\nA Z\nA Z\nB Y\nC Y\nC X\nA Z\nB Z\nA Z\nB Y\nC X\nB Y\nB Y\nB Y\nA Y\nB Z\nC Y\nC X\nA Z\nB Y\nB Y\nB X\nA Z\nC X\nB Y\nB Y\nA Z\nA Z\nA X\nA X\nB Y\nC X\nA X\nA Z\nA Z\nB Y\nC Y\nB Z\nA X\nB Z\nA Z\nB Y\nA Z\nC Y\nA Z\nA X\nB Y\nC Y\nB Y\nA X\nB Z\nC Y\nB Y\nB Y\nA Z\nA X\nA X\nB Y\nC Y\nB X\nB Z\nC X\nB Y\nA Y\nB Y\nB Y\nB Y\nA X\nC Y\nA Z\nC Y\nC Y\nB Z\nB Y\nA Z\nA Z\nA Z\nB Y\nC Y\nB Z\nC X\nC Y\nB Z\nA X\nA Z\nC Y\nB Y\nC Y\nC Y\nC Y\nB Y\nB X\nB Y\nB Y\nC Y\nA X\nB Z\nB X\nC X\nB X\nC Y\nB Z\nB Y\nA X\nC Y\nC Y\nC X\nB Z\nB Y\nA Y\nB Z\nA Z\nB Y\nB Y\nB Z\nB Z\nC Y\nA Z\nA X\nA X\nC Y\nB Y\nA Z\nB Z\nA X\nA Z\nB Z\nC Y\nC Z\nA X\nA Y\nB Y\nC Y\nB Y\nC Y\nB Z\nB Y\nA Z\nC Y\nB Z\nB Y\nA Z\nA Y\nB Y\nB Y\nC Y\nA Z\nC Y\nB Y\nB Y\nA X\nA Z\nA Z\nB Y\nB Y\nB Z\nC Y\nC X\nB Z\nA Y\nB Z\nA X\nC X\nA Y\nB Z\nB Z\nA X\nC X\nC X\nA Z\nC Y\nA X\nA X\nC X\nA X\nB Z\nC Z\nB Z\nB Y\nB Y\nA Z\nA Z\nB Y\nA Z\nC Y\nC X\nB Y\nA X\nA X\nB Z\nC Y\nC Y\nA X\nB Z\nA X\nC X\nC X\nB Z\nC X\nB Z\nA X\nA Y\nA X\nA Z\nA X\nB Y\nC Y\nA X\nC Y\nA Z\nB Z\nA Z\nC Y\nA X\nA Z\nB Y\nA Z\nB Z\nB Z\nA Z\nB Z\nA X\nB Y\nB Z\nC X\nB Y\nB Y\nB Y\nB Y\nA X\nB Z\nB Z\nA Z\nA Z\nC Y\nB Y\nC X\nA X\nB Y\nB Y\nC X\nB Y\nA X\nC Y\nA Z\nB Y\nA Y\nB Z\nB Y\nA Z\nA X\nB Z\nC Y\nA Z\nC Y\nC X\nB Y\nB Z\nC X\nA Y\nB Z\nA Y\nB Z\nB Z\nB Y\nB Z\nC X\nB Y\nA X\nB Z\nA Z\nB Y\nA Z\nC Y\nC Y\nC X\nC X\nA X\nC X\nA X\nA X\nB Z\nB Y\nB Y\nB Y\nB Y\nC X\nC X\nA Z\nA Z\nC X\nC X\nC Y\nC Y\nC Y\nB Y\nA Z\nC Y\nB Z\nB Z\nB Y\nC X\nC X\nC Y\nC Y\nC X\nB Z\nB Z\nB Y\nC Y\nB Y\nA Z\nC Y\nA X\nB Y\nC Y\nC Y\nC Y\nB Y\nA Z\nB Y\nA X\nB Z\nC X\nA Z\nC X\nA Z\nB Z\nC Y\nC Y\nC Y\nC X\nB Z\nC X\nB Y\nB Z\nC X\nB X\nA Z\nB Z\nB Y\nC Y\nB Z\nC Y\nA X\nB Z\nC Y\nC Y\nB Z\nB Y\nC Y\nB Z\nC Y\nA Z\nC X\nC X\nC Y\nA Z\nC Z\nC Y\nB Y\nC Y\nB Y\nB Y\nB Z\nC X\nC X\nB Z\nB Z\nB Z\nA Z\nB Y\nB Y\nA X\nB Y\nC Y\nB Y\nC X\nC X\nB Y\nB Y\nA Y\nB Z\nB Y\nB Y\nC Y\nA Z\nC X\nA Y\nB Y\nB Z\nB Y\nA Y\nC Y\nA Y\nA Z\nB Y\nA Z\nC Y\nC Y\nB Y\nA Z\nB Y\nB Y\nA Z\nB Z\nB Y\nC X\nC Y\nB Z\nB Y\nB Y\nA Z\nC Z\nA Z\nA X\nC X\nB Z\nB Z\nC X\nC Y\nB Y\nB X\nA X\nC Y\nB Z\nB Y\nC X\nB Y\nA Z\nA Z\nA X\nC Y\nB Z\nB Y\nC X\nC X\nB Y\nA Z\nC Z\nB Y\nA Z\nC Y\nB Y\nC X\nA Z\nA Z\nA X\nC X\nA X\nC X\nC X\nA Z\nC X\nB Y\nA Z\nB Y\nB Y\nC Y\nC X\nA Z\nB Z\nB Y\nB Y\nA Y\nA Z\nB Y\nA Z\nB Z\nB Y\nC Y\nA Z\nB Y\nB Y\nB Y\nC Y\nC X\nA X\nA Z\nB Z\nB Y\nC Y\nB Z\nC X\nB Y\nC X\nA Z\nB Y\nB X\nB Y\nA Y\nA X\nA X\nC X\nC X\nB Y\nB X\nC Y\nA Z\nB Z\nC Y\nC Y\nB Y\nA Z\nC X\nA Z\nC Y\nB Z\nB X\nC X\nB X\nC X\nB Y\nC Y\nC Y\nB Z\nB Y\nB Z\nB Z\nA Z\nB Y\nA Y\nB Z\nC X\nC Y\nC X\nA Z\nB Z\nC Y\nB Y\nB Z\nC X\nB Y\nA Y\nA X\nA X\nC Y\nB X\nC X\nB Z\nA Z\nA Y\nB Z\nC X\nC X\nB Y\nA X\nB Z\nC Y\nB X\nB Z\nC Y\nB Y\nC Y\nB Z\nB Y\nB Z\nB Y\nC X\nB Y\nC X\nB Z\nB Z\nC X\nB Z\nA X\nB X\nB Y\nA X\nB Z\nC X\nB Z\nB Y\nB Y\nC X\nA Y\nB Z\nB Z\nB Y\nB Y\nB Z\nC Y\nB Z\nC Y\nC X\nA Z\nC X\nA X\nC Y\nB Y\nC X\nA Z\nB Y\nA Z\nA Z\nB X\nC Y\nB Z\nC Y\nB Y\nB Z\nA X\nB Z\nA X\nC X\nB Z\nB Y\nC X\nC Y\nC Y\nB X\nC X\nC X\nB Z\nC Y\nB Z\nB Y\nB Z\nC Y\nB Y\nC Y\nC X\nB Y\nB Y\nB Z\nA Z\nC X\nA Z\nB Y\nB Z\nA Z\nC Y\nA Z\nB Y\nA Z\nA Z\nC Y\nA Y\nB Y\nA Y\nC X\nB Y\nC X\nB Z\nC Y\nA Z\nC X\nC X\nB Z\nC Z\nC Z\nB Y\nB Y\nC Y\nC Y\nA Z\nC Y\nC Y\nC Y\nA Z\nB Z\nC Y\nB Y\nC Y\nC X\nC X\nB X\nB Y\nC Y\nA Y\nB Y\nB Z\nB Y\nA Y\nB Y\nB X\nC X\nC Z\nC Y\nC Y\nC Y\nB Z\nB X\nC Y\nB Z\nC X\nC Y\nA Z\nA Y\nB Y\nC X\nA Z\nB Y\nC Y\nB Z\nA Z\nA Z\nB Y\nA Z\nC Y\nA X\nC Y\nB Z\nB Z\nB Z\nB Y\nB Y\nA Z\nA Z\nB Y\nC X\nA Z\nC Y\nB Y\nA Z\nC Y\nA Z\nB Z\nB Z\nA Y\nB Y\nB Y\nB Z\nC Z\nB Y\nB X\nB Y\nC X\nB Z\nC Y\nB Z\nA Y\nB Z\nA Z\nA X\nA Z\nC X\nC X\nB Y\nC X\nC Y\nA Z\nB Z\nB Y\nA Z\nB Z\nB Z\nB Z\nC Y\nB Y\nA X\nC Y\nC Y\nC X\nA X\nC Y\nB Y\nC X\nB Z\nA Y\nB X\nB Y\nA Z\nB Y\nB Y\nB Y\nB Z\nC X\nB Z\nB Z\nC X\nB Y\nA Y\nB Y\nC Y\nA Z\nC Z\nB Y\nB Z\nB Z\nC Y\nA Z\nC Y\nC X\nC Y\nB Y\nA X\nA X\nB Z\nC Y\nB Z\nB Y\nA Y\nC X\nA Z\nB Z\nC Y\nC Z\nC X\nB Y\nC X\nA Y\nA Y\nB Z\nC X\nB X\nC X\nB Y\nB Z\nB Z\nB Y\nC Y\nB Y\nB Y\nA Z\nB Z\nB Y\nC X\nB Z\nB Y\nB Y\nC Y\nC Z\nC X\nB Y\nA X\nC Y\nC X\nB Z\nC Y\nA X\nB Y\nA Y\nB Y\nC X\nC Y\nC X\nA X\nB Z\nC X\nB Y\nA Z\nC X\nB Y\nA Z\nB Y\nB Y\nB Y\nA Z\nA X\nC X\nC Y\nC Y\nB Y\nB Y\nB Z\nA Y\nC X\nC X\nB Y\nB Y\nB Z\nA X\nC X\nC X\nB X\nA X\nB Z\nB Y\nC X\nA X\nB Y\nC Y\nA X\nB Y\nC X\nB Z\nC Z\nB X\nC Y\nB Y\nC Y\nA Z\nC Y\nB Z\nC X\nB Z\nC X\nC Y\nC X\nC Y\nC Z\nC X\nC X\nB Y\nC Y\nC X\nC X\nB Z\nB Z\nA X\nC Y\nC Z\nB Y\nC Z\nC Y\nC X\nC X\nB Y\nC Y\nA Y\nB Y\nA Y\nB Y\nB Y\nB Y\nC Y\nC Z\nB Y\nC X\nC X\nB Z\nB Y\nB Z\nC Y\nB Z\nC X\nB Z\nB Y\nB Y\nA Z\nA X\nB X\nA X\nC X\nC Y\nB Y\nA X\nB Z\nB Y\nB Y\nA X\nC X\nC X\nB Y\nB Y\nC Y\nC Y\nB Z\nB Y\nB Y\nB Y\nC Y\nA X\nB Y\nC Y\nB Z\nB Y\nB Y\nB Z\nB Y\nB Y\nB Z\nB Y\nB Y\nC Y\nA Z\nB Z\nA Y\nB Y\nC Y\nB Z\nB Y\nB Y\nC X\nA X\nC Z\n" <> ...
+```
+
+```elixir
+day2_input
+|> Day2.read_data()
+|> Day2.puzzle1()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+12855
+```
+
+```elixir
+day2_input
+|> Day2.read_data()
+|> Day2.puzzle2()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+13726
+```
+
+## Day3
+
+```elixir
+defmodule Day3 do
+  def read_data(data) do
+    data
+    |> String.trim()
+    |> String.split("\n")
+    |> Enum.map(&to_charlist(&1))
+  end
+
+  def get_duplicate(backpack) do
+    [comp1, comp2 | _] = Enum.map(backpack, &MapSet.new(&1))
+    MapSet.intersection(comp1, comp2) |> MapSet.to_list() |> List.first()
+  end
+
+  def get_priority(char) do
+    cond do
+      char >= 97 -> char - 96
+      true -> char - 38
+    end
+  end
+
+  def puzzle1(data) do
+    data
+    |> Enum.map(&Enum.chunk_every(&1, div(length(&1), 2)))
+    |> Enum.map(fn backpack ->
+      backpack
+      |> get_duplicate
+      |> get_priority
+    end)
+    |> Enum.sum()
+  end
+
+  def puzzle2(data) do
+    data
+    |> Enum.chunk_every(3)
+    |> Enum.map(fn group ->
+      [elve1, elve2, elve3 | _] = Enum.map(group, &MapSet.new(&1))
+
+      elve1
+      |> MapSet.intersection(elve2)
+      |> MapSet.intersection(elve3)
+      |> MapSet.to_list()
+      |> List.first()
+      |> get_priority
+    end)
+    |> Enum.sum()
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Day3, <<70, 79, 82, 49, 0, 0, 14, ...>>, {:puzzle2, 1}}
+```
+
+```elixir
+defmodule Day3Test do
+  use ExUnit.Case, async: false
+
+  setup_all do
+    {:ok,
+     data: """
+     vJrwpWtwJgWrhcsFMMfFFhFp
+     jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+     PmmdzqPrVvPwwTWBwg
+     wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+     ttgJtRGJQctTZtZT
+     CrZsJsPPZsGzwwsLwLmpwMDw
+     """}
+  end
+
+  describe "Day3" do
+    test "read data", state do
+      data = Day3.read_data(state[:data])
+      assert length(data) == 6
+    end
+
+    test "get priority" do
+      assert Day3.get_priority(?a) == 1
+      assert Day3.get_priority(?A) == 27
+      assert Day3.get_priority(?z) == 26
+      assert Day3.get_priority(?Z) == 52
+    end
+
+    test "puzzle1", state do
+      assert state[:data]
+             |> Day3.read_data()
+             |> Day3.puzzle1() == 157
+    end
+
+    test "puzzle2", state do
+      assert state[:data]
+             |> Day3.read_data()
+             |> Day3.puzzle2() == 70
+    end
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Day3Test, <<70, 79, 82, 49, 0, 0, 22, ...>>, {:"test Day3 puzzle2", 1}}
+```
+
+```elixir
+ExUnit.run()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+....
+Finished in 0.00 seconds (0.00s async, 0.00s sync)
+4 tests, 0 failures
+
+Randomized with seed 321704
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+%{excluded: 0, failures: 0, skipped: 0, total: 4}
+```
+
+```elixir
+input_day3 = File.read!("/Users/akode/dev/advent_of_code/aoc2022/day3.txt")
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+"LLBPGtltrGPBMMsLcLMMVMpVRhhfCDTwRwRdTfwDllRRRDhC\ngNFJHJFgtZFJjZJHNNFWZWZwwDjCwSDhfCDbdwjfwDTTDT\ngmQNZnZNHWnqmQpLtVLMBsPpBqrL\nHlHldQtHlctzppdQtjdczHhJRnnhGNVmVRJmVjCVFCNh\nLgWNgggZJZGFhCZr\nDbqPswwMvDPqzlBNHtzfHdwd\ntJgtJwwCtNvPHHPtHzDsdRTsBRDDWgWTgT\nQhLQjLGjZQFlFZmnmGLDrzWfRldrTrzTBRWTzs\nbFFmFZjhSFHvBCvCvJpb\nMSGcvnvMGMJgWJDpdndZwBnppfCp\nVPVfQQVbshZNZwdNDwNs\nLtLbjmQRLmVhQtTbfgWjJgFFcrqqrGSqWg\nfHfCNCwwHfGhcntntrrgHrQnrn\nFVqpSpbPpjSVMjqvVmVvMzlzwJnbtnnlzQQlrWzJgt\nPTqqRRPSRSmqSpPpSpRZwGCLGscCNLZZZTNdNZ\npQQQslVSVzzCQnZSlplzbLcHZHcrrrbZqFbZjbFm\ngWtvPgdMDDtFDHHjJJbbccbrLW\nMhNvwwDfDfdtvRQnpFNNTlSRSn\nZTnSnTTzqvFmVzvWWm\nClpCgltHNrtgsHdpLCHtDCNLVvQvVwVmwcsWQGMMQvcGcFcv\nJmrgCHCNJtlmHmNhnJjnnnjJhPfhSJ\nBgRRZTgHHvRTRmRNLNNhQWlmGFfJlWlhsQshpF\nqPqSSttwnnzqqqwtVrPwMthFsJllJJlGhpJhWJQlhVQd\nMjMwScnDPzcwjtqDtztnctrvgNZTTvCvLgvQbLbvjTBvBg\nSWQSbbqTTbPcfMZSwZZwwn\ndghjghmNDmGsGgdnfmtMRCLCCRncfc\npJDJNdsNMMhpssgdprBTBzWlpBWlllWb\nTwNLNZTwWCWLwWCSTZSLzWHGrDHHPmGdDHvndGdNfvMm\nBgpjtpgjBjVbRjQRhVsDnvgGgPnGdrmvnMDfrf\nrhRjRssQJplRtVbpthblbbLSLzFCJZFqLLFWCzqcqzLL\nPBrdPMtBPvCQBVBjCfWPqSHbszhGGnsfSG\nJpmDwJgWJgNzmShhmfSGzh\npRwNcNpFZNZRWgcNplpjVCMVjdvdMQtCMLZjMZ\nlDrcnnlLqLRcDDZRLjFVTHzGCLGVPzGPVWGB\npNwHpdmsNJsbpwsbzJTCPWTVFzzQTWCQ\nvbhswdtdwfdsmtNSssHwvllvMcZjnjcnZqlgMDZglM\nGVVtJGtzVFsVsDTH\nmQRgcBRmRLnBjrtFjCCrHmFF\ngqpBnlRpgZcvdSdlMdSvMt\ntMSCNGSflffNhnnGqlPPsrzWPrTrVpWr\nbZHbmDBQmbDZQdbDcRFZZBTTWWWwqVzszWjrFPVwrzqq\nHQBLHmQVQLDdCggMfgMNLvNG\nHHNDzNJPJPmdPcNGGGhnhwnVhCQBwBjQ\nbsSbLfrLtRSLRSRRRsBwhCpfpCzlwCBVjlCV\nzvvsvqLtZqLtzRsqTrggRMHJNWJgHHHNJcgWNPdHcH\nqgbNvqbgmmZgZLvZqgnZzlpzpzHtVPzttGPrrnnl\njwswGjQDMsQMjdBwdcjCHVtcPVpCVCrPlVSrpc\nGsFWBfhGBfDFDFWqNbLNqbgvqbbvfN\nHgwWqtcqHNWgnHcNNCfvJCCJJfJGvnPfrR\nsbDhZSmdBbsSdmSDdrjjffRvdjPrprCd\nvvZbSFFlFHtqFqqWNc\nZRjnbRsHlncZGjTRTfFVSQBQppQvvFBHpF\nzrLwMdhDhqJJttDQSldQVPQSlSfPlV\nhCWWCzqWnmcZlRRW\nHfgfQflHjWgRQRdRBWVsnbvvscbbbwvmbHncSc\ntJGLtPPGZPwVvSSPhw\nCLGTLZqJtMGqLDFFDZZJFZJpWjRpVNRWpllDpjlBfgVjlp\nrhhGZZhLNhPmfJqvfLlq\ndHRTHRHQQWcTCRTHmmjJgfqqlGmgWgql\nCCwRzTRRdCCRSQwzRcppprZtrMhGBMZMnDSt\nWfffvnSnfSBshwsjhlvGlh\nZHpFNTmppVmNzVVmmFMZzbwwjHGrGlPhCGrljbgHsg\npLZMmqVsZVMMVVscDfdtSSStqcRRdn\nRhRbLzRLHLCPmzznHLbzCRTJhdTVSJJVSjdFFNFFNTJv\nMGgMfpMsBgpnMtGfnfwBtDBjFVdNSSSFdvJSQSpTJdJjNv\nlMsBgDMsblmRblnz\nClNcJZttLfLvvRQzQWwRQN\nhrpMdqMspsrGDdMphhdMMMMHBmRWmSVrRVzVTzQBQvSmzVWV\nppHDMGhMMDbGMdDMGbgFbgbMlJJnjjZtZfLPcfcngZfPPfCR\nZRslLRgCclZLZzQghQhfrbfGbJ\npVSHpBBBBDVDqDBldVzfrMzQbfSTSJrzzJrJ\nDqqHnBDlpNDVVnpnjtDtNjCvFLcsFFPZRcPsNNmPcFcP\nLmLWSmSRNdcpcRHFHrWzWHbMbwZlZlPSbTjlwPbTPJTf\nDttBsvhnhqvGGBhGtBVNBVqJlPwslMMPJwTjZbbZPTfbPs\nCDthQvVNVFCHHWCFdr\nRRtCWSzQZdRMrtRWrSztMggcGDfQTcfFTGqTLgGDLc\nbnVhnvPHhhdJJBTLDGcDTcBvvD\npmbnhmPPmHwdCjmdrRtCdj\nlTPzwhzmHpTvrDCDHJnsNN\ntdgtbMMBbWdFbtqJCnsrqnMMDsrq\nFjWdtgLSWttWtLSWtDWBjGGmwGlzTRwPTQGhlQQm\nwcbnTtTppNLrntznTBBccCGrVldRrZqdqRCZdFZCVZ\nJfHDgjgPPfRRgRlLRddR\njhDhhLMfmJjMjDbNSTzbbbtmttmN\nCfGlvzpvpTjzzCWjvDlfvbbJbCRSdSRhsSQCMhdbhR\nwqrSmrLHHNcLqrrLBNsndssnnhPshnsQwbnJ\nNtcmBLcNVDWzjSvWtv\nvZPCSCvCJffvVvmCmPqCSlDSscczHDRcwcHzRlRHHs\nLFGFNnGrdQttNMFpzpMRRDslsJwsJH\ngjtLnFBJrLvhZvCbZhqB\nDBcjVFjDhQMSJVZbHZbl\nnfmsqppnLfTnfmMmzppwgllSrbSHHtllqbtSwZ\nTRzTnfRWnfdzWssfnRfRpncQPBhdDjjDCPcMQcCBGPPj\nNSjWCHjNHjpPWPpSFWdtqBMBBFVBvqvJGJwqBt\ngQllgDrnhQQDGRshRsZfVtVMRqwMtccVJcBtvRqw\nDQrzrDzhQgrsZLrZjWSSHNTWCjjNGTLH\nCgdcCFcbTbBzPgmNRmpptP\nrsZtsvVvHZZzPmqVNPzNmV\nHZjrwrjnjtHSHwDGdFhCdhWWJnWchCFJ\nRMTqQMRJqPtBtGBPtWjN\nssHfSfShCwwbhsbHhhsmSfhSGNpCpNCjBBBLptcGtpzBBBWW\nHnwrSFwffHsFwrSSjfHglJJlTgZdFdgZRZTDDM\npDLDWlDSlJDmzSJnDScRPLGGvqFqLPccGLgv\nCZHfwNMVNjsHNNqPgcbcBbRQGQ\ndCffZCjVCdCHHTmnlSgTlTSrlStp\nbFtlLCvLlVjpCGPJndrrMMCDDCnrMg\nhRsTwcZcBjZRJrfMDnsHrJnH\nmNZqcTSSBTScNzVQFtGtjpFtjmGG\nbjHdLrHjRWpDCtLzhzps\nlZcGfTvQcQfvlqqcNCcBvVwtGzmzthmwmpthMDmswgMt\nNcqflNQTBTTvvQSvqSVvQJbHPHbHCRJdndJPSHjWHb\nCVmRncrRVrhcmsBgfmtfdJsJmt\nbZHvZZDJwpWtdZgtGNGd\nvSbwHDMFMJqPQqQvvSPQqpSwjRcTVTLjLRhVCLFLjLFnFzCC\nmtffsmBwfwBDBmmsLsHqtpftGrMVMPSMPsVvhNvFrGPMvjNV\nTQTQCRWjJcdcQQSPrhhPSvVGPF\ncTRJCnldWJZlTgbWgbdbpqfqmppjmtljpqzmjpLw\nNNPmrmPWmrSSNNPmnglghmCvLCCflh\nLFbsDQMQFtQFHbQHqhvnngCftpcllptJgJ\nbDjsGqLLdRVjPZPP\ntgrbBQlbtRblwtRGrbCNswDDCsvFszpssCss\nSJVMhSZfHvpdhphN\nSMLpWZSSZMjfgGBgRtbQgl" <> ...
+```
+
+```elixir
+input_day3
+|> Day3.read_data()
+|> Day3.puzzle1()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+7793
+```
+
+```elixir
+input_day3
+|> Day3.read_data()
+|> Day3.puzzle2()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+2499
+```
+
+## Day4
+
+```elixir
+defmodule Day4 do
+  def read_data(data) do
+    data
+  end
+
+  def puzzle1(data) do
+    data
+  end
+
+  def puzzle2(data) do
+    data
+  end
+end
+```
+
+```elixir
+defmodule Day4Test do
+  use ExUnit.Case, async: false
+
+  setup_all do
+    {:ok,
+     data: """
+     
+     """}
+  end
+
+  describe "Day3" do
+    test "read data", state do
+      data = Day4.read_data(state[:data])
+      assert length(data) == 
+    end
+
+    
+
+    test "puzzle 1", state do
+      state[:data]
+      |> Day4.read_data
+      |> Day4.puzzle1
+    end
+
+    test "puzzle 2", state do
+      state[:data]
+      |> Day4.read_data
+      |> Day4.puzzle2
+    end
+  end
+
+end
+```
+
+```elixir
+ExUnit.run()
+```
+
+```elixir
+input_day4 = File.read!("/Users/akode/dev/advent_of_code/aoc2022/day4.txt")
+```
+
+```elixir
+input_day4
+|> Day4.read_data()
+|> Day4.puzzle1()
+```
+
+```elixir
+input_day4
+|> Day4.read_data()
+|> Day4.puzzle2()
+```
