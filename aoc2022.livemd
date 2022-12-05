@@ -660,3 +660,269 @@ input_day4
 ```
 794
 ```
+
+## Day5
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+defmodule Day5 do
+  @move_pattern ~r/move (?<quantity>\d+) from (?<from>\d+) to (?<to>\d+)/
+
+  defmodule Move do
+    defstruct [:quantity, :from, :to]
+  end
+
+  def read_data(data) do
+    [initial_state, moves] = String.split(data, "\n\n")
+    [_ | stacks] = initial_state |> String.split("\n", trim: true) |> Enum.reverse()
+    # stack_labels = parse_stack_labels(stack_labels)
+    {_, stacks} = Enum.map_reduce(stacks, %{}, fn item, acc -> {:ok, add_to_stack(item, acc)} end)
+
+    moves =
+      moves
+      |> String.split("\n", trim: true)
+      |> Enum.map(&parse_move(&1))
+
+    {stacks, moves}
+  end
+
+  def add_to_stack(line, acc \\ %{}) do
+    line = line |> parse_stack_line
+
+    Map.merge(line, acc, fn _k, v1, v2 ->
+      v1 ++ v2
+    end)
+  end
+
+  def parse_stack_line(stack_line) do
+    stack_line
+    |> String.to_charlist()
+    |> Enum.chunk_every(4)
+    |> Enum.with_index(1)
+    |> Enum.map(fn {stack, i} ->
+      {item, _} = List.pop_at(stack, 1)
+
+      if item != 32 do
+        {i, [to_string([item])]}
+      end
+    end)
+    |> Enum.filter(&(!is_nil(&1)))
+    |> Map.new()
+  end
+
+  def parse_stack_labels(label_line) do
+    label_line
+    |> String.split()
+    |> Enum.map(fn label ->
+      label |> String.trim() |> String.to_integer()
+    end)
+  end
+
+  def parse_move(move_string) do
+    m = Regex.named_captures(@move_pattern, move_string)
+    m = for {key, val} <- m, into: %{}, do: {String.to_existing_atom(key), String.to_integer(val)}
+    struct(Move, m)
+  end
+
+  def make_move(state, move) do
+    {item, state} =
+      Map.get_and_update(state, move.from, fn current ->
+        [head | tail] = current
+        {head, tail}
+      end)
+
+    state = Map.update!(state, move.to, fn current -> [item | current] end)
+
+    if move.quantity > 1 do
+      move = %{move | quantity: move.quantity - 1}
+      make_move(state, move)
+    else
+      state
+    end
+  end
+
+  def make_move2(state, move) do
+    {item, state} =
+      Map.get_and_update(state, move.from, fn current ->
+        Enum.split(current, move.quantity)
+      end)
+
+    Map.update!(state, move.to, fn current -> item ++ current end)
+  end
+
+  def to_answer(state) do
+    state
+    |> Enum.map(fn {_key, val} ->
+      [head | _] = val
+      head
+    end)
+    |> List.to_string()
+  end
+
+  def puzzle1(data) do
+    {initial_state, moves} = read_data(data)
+
+    {_, end_state} =
+      Enum.map_reduce(moves, initial_state, fn m, acc ->
+        {:ok, make_move(acc, m)}
+      end)
+
+    end_state |> to_answer
+  end
+
+  def puzzle2(data) do
+    {initial_state, moves} = read_data(data)
+
+    {_, end_state} =
+      Enum.map_reduce(moves, initial_state, fn m, acc ->
+        {:ok, make_move2(acc, m)}
+      end)
+
+    end_state |> to_answer
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Day5, <<70, 79, 82, 49, 0, 0, 35, ...>>, {:puzzle2, 1}}
+```
+
+```elixir
+defmodule Day5Test do
+  use ExUnit.Case, async: false
+
+  setup_all do
+    {:ok,
+     data: """
+         [D]    
+     [N] [C]    
+     [Z] [M] [P]
+      1   2   3 
+
+     move 1 from 2 to 1
+     move 3 from 1 to 3
+     move 2 from 2 to 1
+     move 1 from 1 to 2 
+     """}
+  end
+
+  describe "Day5" do
+    test "parse stack labels" do
+      stack_labels = " 1   2   3 "
+      assert stack_labels |> Day5.parse_stack_labels() |> length == 3
+      assert Day5.parse_stack_labels(stack_labels) == [1, 2, 3]
+    end
+
+    test "parse stack line" do
+      assert Day5.parse_stack_line("[Z] [M] [P]") == %{1 => ["Z"], 2 => ["M"], 3 => ["P"]}
+      assert Day5.parse_stack_line("[Z]     [P]") == %{1 => ["Z"], 3 => ["P"]}
+    end
+
+    test "add to stack" do
+      assert "[Z] [M] [P]"
+             |> Day5.add_to_stack() == %{1 => ["Z"], 2 => ["M"], 3 => ["P"]}
+
+      assert "[A]     [B]"
+             |> Day5.add_to_stack(%{1 => ["Z"], 2 => ["M"], 3 => ["P"]}) == %{
+               1 => ["A", "Z"],
+               2 => ["M"],
+               3 => ["B", "P"]
+             }
+    end
+
+    test "read initial configuration", state do
+      {initial_state, _} = Day5.read_data(state[:data])
+      assert initial_state == %{1 => ["N", "Z"], 2 => ["D", "C", "M"], 3 => ["P"]}
+    end
+
+    test "parse move" do
+      assert "move 1 from 2 to 1"
+             |> Day5.parse_move() == %Day5.Move{quantity: 1, from: 2, to: 1}
+    end
+
+    test "read moves", state do
+      {_, moves} = Day5.read_data(state[:data])
+      assert length(moves) == 4
+    end
+
+    test "move", state do
+      {initial_state, [move | _]} = Day5.read_data(state[:data])
+
+      assert Day5.make_move(initial_state, move) == %{
+               1 => ["D", "N", "Z"],
+               2 => ["C", "M"],
+               3 => ["P"]
+             }
+    end
+
+    test "puzzle 1", state do
+      assert Day5.puzzle1(state[:data]) == "CMZ"
+    end
+
+    test "puzzle 2", state do
+      assert Day5.puzzle2(state[:data]) == "MCD"
+    end
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Day5Test, <<70, 79, 82, 49, 0, 0, 33, ...>>, {:"test Day5 puzzle 2", 1}}
+```
+
+```elixir
+ExUnit.run()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+..................
+Finished in 0.00 seconds (0.00s async, 0.00s sync)
+18 tests, 0 failures
+
+Randomized with seed 321704
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+%{excluded: 0, failures: 0, skipped: 0, total: 18}
+```
+
+```elixir
+input_day5 = File.read!("/Users/akode/dev/advent_of_code/aoc2022/day5.txt")
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+"[D]                     [N] [F]    \n[H] [F]             [L] [J] [H]    \n[R] [H]             [F] [V] [G] [H]\n[Z] [Q]         [Z] [W] [L] [J] [B]\n[S] [W] [H]     [B] [H] [D] [C] [M]\n[P] [R] [S] [G] [J] [J] [W] [Z] [V]\n[W] [B] [V] [F] [G] [T] [T] [T] [P]\n[Q] [V] [C] [H] [P] [Q] [Z] [D] [W]\n 1   2   3   4   5   6   7   8   9 \n\nmove 1 from 3 to 9\nmove 2 from 2 to 1\nmove 3 from 5 to 4\nmove 1 from 1 to 8\nmove 1 from 3 to 9\nmove 1 from 5 to 7\nmove 1 from 5 to 3\nmove 4 from 4 to 2\nmove 2 from 3 to 4\nmove 1 from 3 to 2\nmove 6 from 1 to 5\nmove 1 from 4 to 3\nmove 1 from 3 to 9\nmove 4 from 2 to 4\nmove 4 from 8 to 7\nmove 3 from 2 to 6\nmove 1 from 2 to 7\nmove 5 from 5 to 6\nmove 1 from 5 to 8\nmove 5 from 8 to 7\nmove 7 from 4 to 6\nmove 15 from 6 to 4\nmove 1 from 8 to 7\nmove 1 from 1 to 5\nmove 1 from 2 to 4\nmove 2 from 4 to 8\nmove 1 from 5 to 2\nmove 5 from 6 to 4\nmove 2 from 2 to 1\nmove 1 from 9 to 4\nmove 1 from 6 to 9\nmove 3 from 9 to 3\nmove 3 from 4 to 3\nmove 1 from 6 to 1\nmove 5 from 3 to 4\nmove 2 from 8 to 5\nmove 1 from 3 to 6\nmove 1 from 6 to 2\nmove 1 from 2 to 8\nmove 6 from 4 to 2\nmove 1 from 2 to 7\nmove 1 from 5 to 3\nmove 4 from 9 to 3\nmove 1 from 9 to 1\nmove 3 from 1 to 6\nmove 1 from 9 to 7\nmove 14 from 7 to 6\nmove 1 from 8 to 3\nmove 4 from 2 to 6\nmove 3 from 3 to 8\nmove 9 from 4 to 9\nmove 1 from 1 to 5\nmove 2 from 5 to 8\nmove 3 from 8 to 2\nmove 4 from 2 to 6\nmove 1 from 3 to 9\nmove 10 from 6 to 1\nmove 5 from 9 to 8\nmove 1 from 9 to 3\nmove 6 from 1 to 8\nmove 3 from 7 to 4\nmove 2 from 4 to 5\nmove 2 from 9 to 8\nmove 15 from 8 to 3\nmove 3 from 7 to 9\nmove 8 from 4 to 3\nmove 2 from 5 to 9\nmove 6 from 6 to 5\nmove 6 from 5 to 8\nmove 1 from 7 to 8\nmove 6 from 9 to 2\nmove 5 from 2 to 4\nmove 6 from 3 to 5\nmove 5 from 5 to 8\nmove 1 from 5 to 7\nmove 1 from 9 to 7\nmove 2 from 6 to 4\nmove 12 from 8 to 2\nmove 7 from 2 to 4\nmove 3 from 7 to 5\nmove 3 from 5 to 7\nmove 3 from 7 to 9\nmove 2 from 9 to 7\nmove 1 from 9 to 3\nmove 2 from 7 to 4\nmove 3 from 1 to 9\nmove 4 from 6 to 5\nmove 6 from 2 to 8\nmove 14 from 4 to 9\nmove 7 from 9 to 6\nmove 9 from 9 to 2\nmove 1 from 5 to 8\nmove 5 from 6 to 3\nmove 3 from 1 to 9\nmove 3 from 8 to 9\nmove 1 from 8 to 3\nmove 5 from 2 to 5\nmove 1 from 4 to 9\nmove 2 from 6 to 1\nmove 2 from 3 to 6\nmove 3 from 8 to 3\nmove 2 from 6 to 3\nmove 1 from 4 to 9\nmove 4 from 3 to 6\nmove 7 from 6 to 9\nmove 10 from 9 to 2\nmove 10 from 3 to 2\nmove 7 from 2 to 8\nmove 2 from 1 to 7\nmove 13 from 3 to 7\nmove 7 from 5 to 1\nmove 1 from 9 to 6\nmove 4 from 8 to 4\nmove 2 from 3 to 2\nmove 4 from 4 to 6\nmove 1 from 3 to 4\nmove 5 from 6 to 5\nmove 3 from 5 to 7\nmove 12 from 2 to 5\nmove 7 from 5 to 6\nmove 2 from 8 to 3\nmove 7 from 6 to 2\nmove 3 from 9 to 6\nmove 1 from 6 to 7\nmove 1 from 4 to 9\nmove 2 from 7 to 6\nmove 13 from 7 to 4\nmove 3 from 7 to 5\nmove 1 from 9 to 6\nmove 12 from 4 to 3\nmove 1 from 8 to 1\nmove 2 from 6 to 4\nmove 1 from 7 to 9\nmove 2 from 9 to 8\nmove 12 from 3 to 5\nmove 1 from 8 to 2\nmove 15 from 5 to 6\nmove 2 from 4 to 6\nmove 1 from 9 to 6\nmove 5 from 5 to 4\nmove 4 from 4 to 2\nmove 2 from 1 to 5\nmove 4 from 1 to 5\nmove 1 from 8 to 6\nmove 7 from 5 to 2\nmove 22 from 2 to 3\nmove 9 from 6 to 3\nmove 1 from 1 to 8\nmove 1 from 8 to 7\nmove 23 from 3 to 6\nmove 2 from 2 to 4\nmove 1 from 7 to 8\nmove 1 from 8 to 2\nmove 19 from 6 to 9\nmove 2 from 2 to 4\nmove 4 from 4 to 6\nmove 13 from 6 to 8\nmove 12 from 9 to 1\nmove 2 from 5 to 9\nmove 2 from 4 to 8\nmove 1 from 2 to 7\nmove 1 from 7 to 1\nmove 4 from 6 to 2\nmove 10 from 1 to 9\nmove 1 from 6 to 7\nmove 11 from 8 to 2\nmove 6 from 3 to 6\nmove 1 from 7 to 2\nmove 1 from 1 to 8\nmove 2 from 6 to 7\nmove 7 from 6 to 3\nmove 9 from 3 to 1\nmove 7 from 9 to 6\nmove 1 from 8 to 7\nmove 4 from 2 to 6\nmove 1 from 8 to 3\nmove 6 from 6 to 5\nmove 9 from 9 to 3\nmove 5 from 6 to 1\nmove 1 from 7 to 8\nmove 2 from 8 to 4\nmove 1 from 4 to 2\nmove 1 from 4 to 5\nmove 2 from 5 to 6\nmove 1 from 6 to 9\nmove 9 from 1 to 4\nmove 4 from 4 to 6\nmove 2 from 4 to 7\nmove 7 from 2 to 8\nmove 5 from 6 to 7\nmove 6 from 3 to 8\nmove 8 from 1 to 9\nmove 3 from 5 to 2\nmove 2 from 3 to 9\nmove 3 from 9 to 4\nmove 7 from 2 to 3\nmove 1 from 7 to 2\nmove 10" <> ...
+```
+
+```elixir
+input_day5
+|> Day5.puzzle1()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+"ZWHVFWQWW"
+```
+
+```elixir
+input_day5
+|> Day5.puzzle2()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+"HZFZCCWWV"
+```
