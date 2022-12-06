@@ -2,6 +2,31 @@
 
 # AOC2022
 
+```elixir
+Mix.install([
+  {:ex_parameterized, "~> 1.3"}
+])
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+Resolving Hex dependencies...
+Dependency resolution completed:
+New:
+  ex_parameterized 1.3.7
+* Getting ex_parameterized (Hex package)
+==> ex_parameterized
+Compiling 3 files (.ex)
+Generated ex_parameterized app
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+:ok
+```
+
 ## Day1
 
 ```elixir
@@ -89,7 +114,7 @@ end
 <!-- livebook:{"output":true} -->
 
 ```
-{:module, Day1Test, <<70, 79, 82, 49, 0, 0, 18, ...>>, {:"test Puzzle 1 top 3 calories", 1}}
+{:module, Day1Test, <<70, 79, 82, 49, 0, 0, 18, ...>>, {:"test Day1 top 3 calories", 1}}
 ```
 
 ```elixir
@@ -100,10 +125,10 @@ ExUnit.run()
 
 ```
 ...
-Finished in 0.00 seconds (0.00s async, 0.00s sync)
+Finished in 0.01 seconds (0.00s async, 0.01s sync)
 3 tests, 0 failures
 
-Randomized with seed 321704
+Randomized with seed 627574
 ```
 
 <!-- livebook:{"output":true} -->
@@ -311,7 +336,7 @@ ExUnit.run()
 Finished in 0.00 seconds (0.00s async, 0.00s sync)
 5 tests, 0 failures
 
-Randomized with seed 321704
+Randomized with seed 627574
 ```
 
 <!-- livebook:{"output":true} -->
@@ -473,7 +498,7 @@ ExUnit.run()
 Finished in 0.00 seconds (0.00s async, 0.00s sync)
 4 tests, 0 failures
 
-Randomized with seed 321704
+Randomized with seed 627574
 ```
 
 <!-- livebook:{"output":true} -->
@@ -604,7 +629,7 @@ end
 <!-- livebook:{"output":true} -->
 
 ```
-{:module, Day4Test, <<70, 79, 82, 49, 0, 0, 17, ...>>, {:"test Day3 puzzle 2", 1}}
+{:module, Day4Test, <<70, 79, 82, 49, 0, 0, 18, ...>>, {:"test Day3 puzzle 2", 1}}
 ```
 
 ```elixir
@@ -618,7 +643,7 @@ ExUnit.run()
 Finished in 0.00 seconds (0.00s async, 0.00s sync)
 3 tests, 0 failures
 
-Randomized with seed 321704
+Randomized with seed 627574
 ```
 
 <!-- livebook:{"output":true} -->
@@ -882,17 +907,17 @@ ExUnit.run()
 <!-- livebook:{"output":true} -->
 
 ```
-..................
+.........
 Finished in 0.00 seconds (0.00s async, 0.00s sync)
-18 tests, 0 failures
+9 tests, 0 failures
 
-Randomized with seed 321704
+Randomized with seed 627574
 ```
 
 <!-- livebook:{"output":true} -->
 
 ```
-%{excluded: 0, failures: 0, skipped: 0, total: 18}
+%{excluded: 0, failures: 0, skipped: 0, total: 9}
 ```
 
 ```elixir
@@ -902,7 +927,7 @@ input_day5 = File.read!("/Users/akode/dev/advent_of_code/aoc2022/day5.txt")
 <!-- livebook:{"output":true} -->
 
 ```
-"[D]                     [N] [F]    \n[H] [F]             [L] [J] [H]    \n[R] [H]             [F] [V] [G] [H]\n[Z] [Q]         [Z] [W] [L] [J] [B]\n[S] [W] [H]     [B] [H] [D] [C] [M]\n[P] [R] [S] [G] [J] [J] [W] [Z] [V]\n[W] [B] [V] [F] [G] [T] [T] [T] [P]\n[Q] [V] [C] [H] [P] [Q] [Z] [D] [W]\n 1   2   3   4   5   6   7   8   9 \n\nmove 1 from 3 to 9\nmove 2 from 2 to 1\nmove 3 from 5 to 4\nmove 1 from 1 to 8\nmove 1 from 3 to 9\nmove 1 from 5 to 7\nmove 1 from 5 to 3\nmove 4 from 4 to 2\nmove 2 from 3 to 4\nmove 1 from 3 to 2\nmove 6 from 1 to 5\nmove 1 from 4 to 3\nmove 1 from 3 to 9\nmove 4 from 2 to 4\nmove 4 from 8 to 7\nmove 3 from 2 to 6\nmove 1 from 2 to 7\nmove 5 from 5 to 6\nmove 1 from 5 to 8\nmove 5 from 8 to 7\nmove 7 from 4 to 6\nmove 15 from 6 to 4\nmove 1 from 8 to 7\nmove 1 from 1 to 5\nmove 1 from 2 to 4\nmove 2 from 4 to 8\nmove 1 from 5 to 2\nmove 5 from 6 to 4\nmove 2 from 2 to 1\nmove 1 from 9 to 4\nmove 1 from 6 to 9\nmove 3 from 9 to 3\nmove 3 from 4 to 3\nmove 1 from 6 to 1\nmove 5 from 3 to 4\nmove 2 from 8 to 5\nmove 1 from 3 to 6\nmove 1 from 6 to 2\nmove 1 from 2 to 8\nmove 6 from 4 to 2\nmove 1 from 2 to 7\nmove 1 from 5 to 3\nmove 4 from 9 to 3\nmove 1 from 9 to 1\nmove 3 from 1 to 6\nmove 1 from 9 to 7\nmove 14 from 7 to 6\nmove 1 from 8 to 3\nmove 4 from 2 to 6\nmove 3 from 3 to 8\nmove 9 from 4 to 9\nmove 1 from 1 to 5\nmove 2 from 5 to 8\nmove 3 from 8 to 2\nmove 4 from 2 to 6\nmove 1 from 3 to 9\nmove 10 from 6 to 1\nmove 5 from 9 to 8\nmove 1 from 9 to 3\nmove 6 from 1 to 8\nmove 3 from 7 to 4\nmove 2 from 4 to 5\nmove 2 from 9 to 8\nmove 15 from 8 to 3\nmove 3 from 7 to 9\nmove 8 from 4 to 3\nmove 2 from 5 to 9\nmove 6 from 6 to 5\nmove 6 from 5 to 8\nmove 1 from 7 to 8\nmove 6 from 9 to 2\nmove 5 from 2 to 4\nmove 6 from 3 to 5\nmove 5 from 5 to 8\nmove 1 from 5 to 7\nmove 1 from 9 to 7\nmove 2 from 6 to 4\nmove 12 from 8 to 2\nmove 7 from 2 to 4\nmove 3 from 7 to 5\nmove 3 from 5 to 7\nmove 3 from 7 to 9\nmove 2 from 9 to 7\nmove 1 from 9 to 3\nmove 2 from 7 to 4\nmove 3 from 1 to 9\nmove 4 from 6 to 5\nmove 6 from 2 to 8\nmove 14 from 4 to 9\nmove 7 from 9 to 6\nmove 9 from 9 to 2\nmove 1 from 5 to 8\nmove 5 from 6 to 3\nmove 3 from 1 to 9\nmove 3 from 8 to 9\nmove 1 from 8 to 3\nmove 5 from 2 to 5\nmove 1 from 4 to 9\nmove 2 from 6 to 1\nmove 2 from 3 to 6\nmove 3 from 8 to 3\nmove 2 from 6 to 3\nmove 1 from 4 to 9\nmove 4 from 3 to 6\nmove 7 from 6 to 9\nmove 10 from 9 to 2\nmove 10 from 3 to 2\nmove 7 from 2 to 8\nmove 2 from 1 to 7\nmove 13 from 3 to 7\nmove 7 from 5 to 1\nmove 1 from 9 to 6\nmove 4 from 8 to 4\nmove 2 from 3 to 2\nmove 4 from 4 to 6\nmove 1 from 3 to 4\nmove 5 from 6 to 5\nmove 3 from 5 to 7\nmove 12 from 2 to 5\nmove 7 from 5 to 6\nmove 2 from 8 to 3\nmove 7 from 6 to 2\nmove 3 from 9 to 6\nmove 1 from 6 to 7\nmove 1 from 4 to 9\nmove 2 from 7 to 6\nmove 13 from 7 to 4\nmove 3 from 7 to 5\nmove 1 from 9 to 6\nmove 12 from 4 to 3\nmove 1 from 8 to 1\nmove 2 from 6 to 4\nmove 1 from 7 to 9\nmove 2 from 9 to 8\nmove 12 from 3 to 5\nmove 1 from 8 to 2\nmove 15 from 5 to 6\nmove 2 from 4 to 6\nmove 1 from 9 to 6\nmove 5 from 5 to 4\nmove 4 from 4 to 2\nmove 2 from 1 to 5\nmove 4 from 1 to 5\nmove 1 from 8 to 6\nmove 7 from 5 to 2\nmove 22 from 2 to 3\nmove 9 from 6 to 3\nmove 1 from 1 to 8\nmove 1 from 8 to 7\nmove 23 from 3 to 6\nmove 2 from 2 to 4\nmove 1 from 7 to 8\nmove 1 from 8 to 2\nmove 19 from 6 to 9\nmove 2 from 2 to 4\nmove 4 from 4 to 6\nmove 13 from 6 to 8\nmove 12 from 9 to 1\nmove 2 from 5 to 9\nmove 2 from 4 to 8\nmove 1 from 2 to 7\nmove 1 from 7 to 1\nmove 4 from 6 to 2\nmove 10 from 1 to 9\nmove 1 from 6 to 7\nmove 11 from 8 to 2\nmove 6 from 3 to 6\nmove 1 from 7 to 2\nmove 1 from 1 to 8\nmove 2 from 6 to 7\nmove 7 from 6 to 3\nmove 9 from 3 to 1\nmove 7 from 9 to 6\nmove 1 from 8 to 7\nmove 4 from 2 to 6\nmove 1 from 8 to 3\nmove 6 from 6 to 5\nmove 9 from 9 to 3\nmove 5 from 6 to 1\nmove 1 from 7 to 8\nmove 2 from 8 to 4\nmove 1 from 4 to 2\nmove 1 from 4 to 5\nmove 2 from 5 to 6\nmove 1 from 6 to 9\nmove 9 from 1 to 4\nmove 4 from 4 to 6\nmove 2 from 4 to 7\nmove 7 from 2 to 8\nmove 5 from 6 to 7\nmove 6 from 3 to 8\nmove 8 from 1 to 9\nmove 3 from 5 to 2\nmove 2 from 3 to 9\nmove 3 from 9 to 4\nmove 7 from 2 to 3\nmove 1 from 7 to 2\nmove 10" <> ...
+"[D]                     [N] [F]    \n[H] [F]             [L] [J] [H]    \n[R] [H]             [F] [V] [G] [H]\n[Z] [Q]         [Z] [W] [L] [J] [B]\n[S] [W] [H]     [B] [H] [D] [C] [M]\n[P] [R] [S] [G] [J] [J] [W] [Z] [V]\n[W] [B] [V] [F] [G] [T] [T] [T] [P]\n[Q] [V] [C] [H] [P] [Q] [Z] [D] [W]\n 1   2   3   4   5   6   7   8   9  \n\nmove 1 from 3 to 9\nmove 2 from 2 to 1\nmove 3 from 5 to 4\nmove 1 from 1 to 8\nmove 1 from 3 to 9\nmove 1 from 5 to 7\nmove 1 from 5 to 3\nmove 4 from 4 to 2\nmove 2 from 3 to 4\nmove 1 from 3 to 2\nmove 6 from 1 to 5\nmove 1 from 4 to 3\nmove 1 from 3 to 9\nmove 4 from 2 to 4\nmove 4 from 8 to 7\nmove 3 from 2 to 6\nmove 1 from 2 to 7\nmove 5 from 5 to 6\nmove 1 from 5 to 8\nmove 5 from 8 to 7\nmove 7 from 4 to 6\nmove 15 from 6 to 4\nmove 1 from 8 to 7\nmove 1 from 1 to 5\nmove 1 from 2 to 4\nmove 2 from 4 to 8\nmove 1 from 5 to 2\nmove 5 from 6 to 4\nmove 2 from 2 to 1\nmove 1 from 9 to 4\nmove 1 from 6 to 9\nmove 3 from 9 to 3\nmove 3 from 4 to 3\nmove 1 from 6 to 1\nmove 5 from 3 to 4\nmove 2 from 8 to 5\nmove 1 from 3 to 6\nmove 1 from 6 to 2\nmove 1 from 2 to 8\nmove 6 from 4 to 2\nmove 1 from 2 to 7\nmove 1 from 5 to 3\nmove 4 from 9 to 3\nmove 1 from 9 to 1\nmove 3 from 1 to 6\nmove 1 from 9 to 7\nmove 14 from 7 to 6\nmove 1 from 8 to 3\nmove 4 from 2 to 6\nmove 3 from 3 to 8\nmove 9 from 4 to 9\nmove 1 from 1 to 5\nmove 2 from 5 to 8\nmove 3 from 8 to 2\nmove 4 from 2 to 6\nmove 1 from 3 to 9\nmove 10 from 6 to 1\nmove 5 from 9 to 8\nmove 1 from 9 to 3\nmove 6 from 1 to 8\nmove 3 from 7 to 4\nmove 2 from 4 to 5\nmove 2 from 9 to 8\nmove 15 from 8 to 3\nmove 3 from 7 to 9\nmove 8 from 4 to 3\nmove 2 from 5 to 9\nmove 6 from 6 to 5\nmove 6 from 5 to 8\nmove 1 from 7 to 8\nmove 6 from 9 to 2\nmove 5 from 2 to 4\nmove 6 from 3 to 5\nmove 5 from 5 to 8\nmove 1 from 5 to 7\nmove 1 from 9 to 7\nmove 2 from 6 to 4\nmove 12 from 8 to 2\nmove 7 from 2 to 4\nmove 3 from 7 to 5\nmove 3 from 5 to 7\nmove 3 from 7 to 9\nmove 2 from 9 to 7\nmove 1 from 9 to 3\nmove 2 from 7 to 4\nmove 3 from 1 to 9\nmove 4 from 6 to 5\nmove 6 from 2 to 8\nmove 14 from 4 to 9\nmove 7 from 9 to 6\nmove 9 from 9 to 2\nmove 1 from 5 to 8\nmove 5 from 6 to 3\nmove 3 from 1 to 9\nmove 3 from 8 to 9\nmove 1 from 8 to 3\nmove 5 from 2 to 5\nmove 1 from 4 to 9\nmove 2 from 6 to 1\nmove 2 from 3 to 6\nmove 3 from 8 to 3\nmove 2 from 6 to 3\nmove 1 from 4 to 9\nmove 4 from 3 to 6\nmove 7 from 6 to 9\nmove 10 from 9 to 2\nmove 10 from 3 to 2\nmove 7 from 2 to 8\nmove 2 from 1 to 7\nmove 13 from 3 to 7\nmove 7 from 5 to 1\nmove 1 from 9 to 6\nmove 4 from 8 to 4\nmove 2 from 3 to 2\nmove 4 from 4 to 6\nmove 1 from 3 to 4\nmove 5 from 6 to 5\nmove 3 from 5 to 7\nmove 12 from 2 to 5\nmove 7 from 5 to 6\nmove 2 from 8 to 3\nmove 7 from 6 to 2\nmove 3 from 9 to 6\nmove 1 from 6 to 7\nmove 1 from 4 to 9\nmove 2 from 7 to 6\nmove 13 from 7 to 4\nmove 3 from 7 to 5\nmove 1 from 9 to 6\nmove 12 from 4 to 3\nmove 1 from 8 to 1\nmove 2 from 6 to 4\nmove 1 from 7 to 9\nmove 2 from 9 to 8\nmove 12 from 3 to 5\nmove 1 from 8 to 2\nmove 15 from 5 to 6\nmove 2 from 4 to 6\nmove 1 from 9 to 6\nmove 5 from 5 to 4\nmove 4 from 4 to 2\nmove 2 from 1 to 5\nmove 4 from 1 to 5\nmove 1 from 8 to 6\nmove 7 from 5 to 2\nmove 22 from 2 to 3\nmove 9 from 6 to 3\nmove 1 from 1 to 8\nmove 1 from 8 to 7\nmove 23 from 3 to 6\nmove 2 from 2 to 4\nmove 1 from 7 to 8\nmove 1 from 8 to 2\nmove 19 from 6 to 9\nmove 2 from 2 to 4\nmove 4 from 4 to 6\nmove 13 from 6 to 8\nmove 12 from 9 to 1\nmove 2 from 5 to 9\nmove 2 from 4 to 8\nmove 1 from 2 to 7\nmove 1 from 7 to 1\nmove 4 from 6 to 2\nmove 10 from 1 to 9\nmove 1 from 6 to 7\nmove 11 from 8 to 2\nmove 6 from 3 to 6\nmove 1 from 7 to 2\nmove 1 from 1 to 8\nmove 2 from 6 to 7\nmove 7 from 6 to 3\nmove 9 from 3 to 1\nmove 7 from 9 to 6\nmove 1 from 8 to 7\nmove 4 from 2 to 6\nmove 1 from 8 to 3\nmove 6 from 6 to 5\nmove 9 from 9 to 3\nmove 5 from 6 to 1\nmove 1 from 7 to 8\nmove 2 from 8 to 4\nmove 1 from 4 to 2\nmove 1 from 4 to 5\nmove 2 from 5 to 6\nmove 1 from 6 to 9\nmove 9 from 1 to 4\nmove 4 from 4 to 6\nmove 2 from 4 to 7\nmove 7 from 2 to 8\nmove 5 from 6 to 7\nmove 6 from 3 to 8\nmove 8 from 1 to 9\nmove 3 from 5 to 2\nmove 2 from 3 to 9\nmove 3 from 9 to 4\nmove 7 from 2 to 3\nmove 1 from 7 to 2\nmove 1" <> ...
 ```
 
 ```elixir
@@ -925,4 +950,144 @@ input_day5
 
 ```
 "HZFZCCWWV"
+```
+
+## Day6
+
+```elixir
+defmodule Day6 do
+  @packet_size 4
+  @message_size 14
+
+  def is_start?(chunk, size) do
+    chunk |> MapSet.new() |> MapSet.size() == size
+  end
+
+  def find_marker(input, size) do
+    input
+    |> String.to_charlist()
+    |> Enum.chunk_every(size, 1)
+    |> Enum.with_index(size)
+    |> Enum.map(fn {chunk, idx} ->
+      {
+        is_start?(chunk, size),
+        idx
+      }
+    end)
+    |> Enum.find_value(fn {is_start, idx} -> if is_start == true, do: idx end)
+  end
+
+  def find_packet_marker(input) do
+    find_marker(input, @packet_size)
+  end
+
+  def find_message_marker(input) do
+    find_marker(input, @message_size)
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Day6, <<70, 79, 82, 49, 0, 0, 11, ...>>, {:find_message_marker, 1}}
+```
+
+```elixir
+defmodule Day6Test do
+  use ExUnit.Case, async: false
+  use ExUnit.Parameterized
+
+  describe "Day6 part1" do
+    test_with_params "find packet start marker",
+                     fn input, output ->
+                       assert Day6.find_packet_marker(input) == output
+                     end do
+      [
+        {"bvwbjplbgvbhsrlpgdmjqwftvncz", 5},
+        {"nppdvjthqldpwncqszvftbrmjlhg", 6},
+        {"nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 10},
+        {"zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 11}
+      ]
+    end
+  end
+
+  describe "Day6 part2" do
+    test_with_params "find message start marker",
+                     fn input, output ->
+                       assert Day6.find_message_marker(input) == output
+                     end do
+      [
+        {"mjqjpqmgbljsphdztnvjfqwrcgsmlb", 19},
+        {"bvwbjplbgvbhsrlpgdmjqwftvncz", 23},
+        {"nppdvjthqldpwncqszvftbrmjlhg", 23},
+        {"nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 29},
+        {"zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 26}
+      ]
+    end
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, Day6Test, <<70, 79, 82, 49, 0, 0, 24, ...>>,
+ [
+   "test Day6 part2 'find message start marker': number of 0": 1,
+   "test Day6 part2 'find message start marker': number of 1": 1,
+   "test Day6 part2 'find message start marker': number of 2": 1,
+   "test Day6 part2 'find message start marker': number of 3": 1,
+   "test Day6 part2 'find message start marker': number of 4": 1
+ ]}
+```
+
+```elixir
+ExUnit.run()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+.........
+Finished in 0.00 seconds (0.00s async, 0.00s sync)
+9 tests, 0 failures
+
+Randomized with seed 627574
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+%{excluded: 0, failures: 0, skipped: 0, total: 9}
+```
+
+```elixir
+input_day6 = File.read!("/Users/akode/dev/advent_of_code/aoc2022/day6.txt")
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+"pnnfhnhshrhmhwwmwzmznmnwmwfmfhfjfcjjtgtbggpdgdjjbjrjsjpjrrmddmgmpmddrhddnfnfzfpfvpfpprhhlffmtffqhhdtdcdsswsdwswmmfvvpdprrnnhhhtffnfbbznbznnvdnnbffjrfrbfrbrgbrrntnggrqqwtqwwgjgsswgwqwtwwsvwvbwvwrwlrlppzfzwfzzpmzzhqqzqlzlglzzmrmwrmwwvmwvvnppjfjttlffhjjjsccbggnffqgfgjjnccmdmzmllvnlnznttlvlttvnvgnvvqvmvqqzrqqcgglzzwtztwwmjmzjjnddsffqrqlrrvsvdvldvvlgvlvccdzczcqcpphggtnthhhtbhtttcjtjcjgcjcbbrhbbfrffgjgdgzddcttczzsccbpcpddcpcggmjgjddtcccthccfrccmdmhmddnwddfldffntnptnpttcptcptpfphhmfmwfwmmlblgbgvbvlltqltldttfcfcclgcllmplmlbbjnjzjnzzttnvvgddshddsqddggsqgqddsggdhghjgjhhgchhdmdjmjddgdhghrrphrrpnnqhhjwwqrrcmmslmmszzpgzpzzrmzmznzllnjnnlnbbdvdsdffbpffcmmnznqqcbbzvvjnjvvwqwgqqpnnzwnzwnzwwwlpwpzzfqzfqqwnqnbnfnqnbqqbggqnqdndrrzzlffbbgqgfgrfrqqsddnqnqjjgssqwqwcqcpcrrqppwpjjfnfpffhphwwmcwwznwznnplptlplnlsnlsldslslsffwtwftwtbtdbbjsjcczwwfllwtlwtlwlvwlwrwppsggvcvrrqcrqqvmqvmmbrrsbsfspspjpnnmpmqmcczgzffqmfmtmpppwzppzrpzrzsrrpqrpqpmpvmpvpttbqtqmtmjttqdqgggcppclcjcpcsppctpplpdpcppcmmdzmzddvhvhnhrrldllcwwbnwnssshlhrhthggtmggbjbjwwbvbttjllvrrfggngvngnmmvzzrrmddmcddztztctfccqpcpcqqvqppqcqdcdhhvhssgfgzgwwzmmnssvwwbqbhbnhnphpqqjcqcddfwfttqjtqtlttglljgjbgjgnnsqqvrvffqvqfqbffljjpffssqdsqstqqqldqqmhmsmsqqwtqwqdqgdgjjfbjffgbbrhhqghgppqgpgmpmmfzfhhfrhffgmfggpzgpzzhtzhhlbhhqbbzvvnvqnntptmmbhbdhdwwmjjcnnmsscqcbbtjtvjvwjvvmsmjmtmpmgghttcztzggpddbfbfgbbdsdrsrrqfqjjqfjjhzhtzzmdzzcgzgdzzmvmmfmjmgjmggmppbdppmzpppvfppzhhfsfwfhhpjpmmrjjpssdccjpjpwjppvdpphcpcjcfjfwjfwfjwfjjqcqcwqqqsmmmbbgdgwwpcwwdfdlflrltlgtthfhfjhhlthtddlgdggsjsrrdpdcppgttphpgpwppmpzmmrjmmvjvgvgfglfgllbqlqhllszzlwwhzzdfdcdtctptwtztfzzmjzjtjtrjrcrnrjjmwmnnbddgvgtgsstjsszmpqdmzgqflrbrspjmtzjcrmlzltmhgblghnwqvwwqwzbpnfrpdpblpjgshfccfbjfsnwvvhnjftsdnsgtzzjtzpmtfdvzrhtqpblhwgmqtgpbfvbdmsnrrrvvbstpsznvbbwgjfqjrhdvwvgptpglpfddhddmtglmjlpwlvfpbtbmgbplbzrlpdlvqzcwhbscpszgfstjpfdvfpmljlngrbgrdnnblzqrfpzsdvblpwbtnhdjclldvwvbwcwzfzbdspgwpfqjfbdbrqcshtlvcrdstnzggbwqnzbrfzbpnrtmvpbvdhcvdsdshgtvhfgdzljflppqbwclnvbhbczvrscjhlbgbfvwdjhnjsgmvwhpfgwbbmnndpnglfrmtfdzvqgfjdqfhgrhvpbqndmqnqccgwswwdsqjnbjtjbjdbqgjnmfbdvlnfwbnrdqgvgzzhmmbbdzfdvvpwhpbwbnzdcdpchrwlhfsjnhhjggvplmqggwjdsvjtpnpnqgldjjdcscrdltssjdrpcrfbgbcjfplhzgwbprfcslhpcngtszrghmwhzdqscbfrhzdwcffzvmjrmcjcstfvhplvrsglgsjnjtrpddsdfqjsndjnfmvdhfgdbzzflqhsrrwmrnlpqzmcddqbqvvzgtlztpgjnddtcnbmqsjlhmcszrmcjvwzpptlfqsmpvgnzvrjdwzpdwqgbmdgdtvjlmfczthjbcgfhbqpnmlbmrwwhfptzlbmfdhssznjcvjbmnjtnvzjhzczlrrdnttmmcbnzhqpplzqwgttwrnwfvmnptgqlfrnzvqpjfgrzwmlcwvtptvcvrlsrdwdgqfvffspmdbnnrqjttpqvhvdpbcrvzptwnhhfsqzchmncvttcdgdnlppcfzpmjpvbvqhlvplwvrmmbbggbwttwmvsqjlllsftprsmtmnzjcqfzblrllzgshfljchrjwjlpvhpbrtrsschzltrblgjnbgdnmwdggjhqggntblnhsvfgsbcblhmctbqzqwmhqnjhpzjfqpjdgwpzhczcftfcpdhvzhzccmwmrfrbqshzmtpqgpbbvfqqbjbmvnlnlwjtzrpmhdlffccrqcfgsjfszbrzrfztntchtmgmbhjgmlsqzcbtqqjzzlghtzzqmlnnvsgsvbbjfgqsqbqmqrdzwpwdgbggpdvhvnlzshhntprjdwhnwfvdjzpqgflwrvwgtmfdmfdztcbtfnjdrvgdwwczdgphnvdgrbdchprqldfjrvcsflcmlcmzqvqgsgnzcgmrhccgcmptcdzhbcdgdtppwztfstzqqzqrdzlnzthggjmpcflmbcmdrrjnnpbpqfmjbzqbtsjjgdlmgncbmgspqqvbrvzrdjscpzjsdtcdvsdwqlmwrngttswnrsbqctvhgfnnwblpcqzdmzpfchplslspmghvgcqntmlrfhgpcbpspvfhnvqvglsqzsnsdzddqpbsjhlclslngbwvvgjhwfcncqsmqwbptzvpzlzslsjjjldjpwpfrdlfbjphqcjtsgqdsdfdjhqgdhcppndwmhmmldvvmblcqcqfqhltbcbvrnghjfmtgqwtwljtczvqlnmgscjhqdhnzwhzvzzqnlsrhqvljqpgpwghfqlhjjrrhvnmnnrbnlhdcjctwtlhmhhmhjvcgzdrzmdjrvqzgnsttjdwglgwlcmbcdnjprgfsbbdzzngbqdrvwwwhbtlnnmzqdjttsrrpvlfdqnfhhtdtvmpcjgdwtbnqmwmtszdqfmbhjsjpqqddzfggwjhbtlnqfgcwbjzdtcpcpzgnrmnvwlpgmwfjlpgppdfrfvvjwsfcdqdnpcpjbqsvhttssgptqjghctrbgntlfjzdrfjccsprsjlrrwrzsmnjsqslmpdtrvhlqbnmgpjthpqdqmnvrtzlhhzzfzbrcclpmpcszhbttgrtcpgcpjwpdbfpfvgspsgtvglwthqcmcvmrfmclwlvjlsptfgmtlrnsvjrnfwzhdcsmgztpzfcvzwdztpppvqpvqfpdrsfnlhrbqwrsqjtwjmhnpwmqmpdgdhbtbpfwnmswffdqffdggrdrpmngvpzplmmwlddnhcvjjzqqfsbbtfmzdwnpvbjrshmllczhgvwwcbcbtfrfnplqjwmjlvpwwgfrtffwddwppsgtnlmpvfnhfzcsgjbqbjmbvpnqppsrvwnlzvcmjqgtbzrdsnrgwbfmrvnflgccrssfvcwgllqqbbcthzmbtnsmbzbcczhtzcvmthttpltrtdmgspctvtpvqbhmnnpnjwmhpqclmjsdrbjwvjbtzcjlqbjsvbgdwqzflnwzcfjwtrhjgfshfmwbjfwpnhjsmtpgbpwlfjjnmdlrhchmnfmgmgcrftmwbzshdwbhndgwtjbrrvbwprqppfmgfmfllpcjgrwdmtzddthsjlgjljv\n"
+```
+
+```elixir
+Day6.find_packet_marker(input_day6)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+1623
+```
+
+```elixir
+Day6.find_message_marker(input_day6)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+3774
 ```
